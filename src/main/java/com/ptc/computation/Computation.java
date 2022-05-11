@@ -17,18 +17,22 @@ public class Computation {
 
 	private Integer position;
 
+	private boolean isCustom;
+
 	public Computation(String[] row) {
 		this.numbers = Arrays.stream(row).skip(1).filter(item-> !item.isEmpty()).map(Integer::parseInt).toList();
 		this.operator = row[0].charAt(0);
 		this.result = this.compute();
-		this.position = null;
+		this.position = 1;
+		this.isCustom = false;
 	}
 
-	public Computation(List<Integer> numbers, Character operator, Integer position) {
+	public Computation(List<Integer> numbers, Character operator, Integer position, Boolean isCustom) {
 		this.numbers = numbers;
 		this.operator = operator;
 		this.result = this.compute();
-		this.position = position;
+		this.position = position != null ? position : 1;
+		this.isCustom = isCustom;
 	}
 
 	public Integer compute() {
@@ -82,23 +86,17 @@ public class Computation {
 		StringBuilder sb = new StringBuilder();
 		sb.append(this.operatorToString());
 		sb.append(";");
-		this.numbers.forEach(sb::append);
-		sb.append(";");
 		sb.append(this.result);
 		sb.append(";");
-		sb.append(";");
-		sb.append(";");
+		sb.append("0;");
+		sb.append("0");
 		return sb.toString();
 	}
 
 	public String toCSVWithoutOperator() {
-		StringBuilder sb = new StringBuilder();
-		this.numbers.forEach(sb::append);
-		sb.append(";");
-		sb.append(this.result);
-		sb.append(";");
-		sb.append(";");
-		sb.append(";");
-		return sb.toString();
+		return this.result +
+				";" +
+				"0;" +
+				"0;";
 	}
 }
