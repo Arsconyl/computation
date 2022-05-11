@@ -81,20 +81,28 @@ public class ComputationCSVService {
                         Integer firstOperand = null;
                         Integer secondOperand = null;
                         if (firstOperandPosition.getRight() == null)
+                            // [n:] => take the result of the row n
                             firstOperand = rows.get(firstOperandPosition.getLeft() - 1).getResult1();
+                            // [:n] => current row, column n
                         else if (firstOperandPosition.getLeft() == null)
-                            firstOperand = Integer.valueOf(allRows.get(firstOperandPosition.getRight())[2]);
+                            firstOperand = Integer.valueOf(allRows.get(i)[firstOperandPosition.getRight()]);
                         else
-                            firstOperand = Integer.valueOf(allRows.get(firstOperandPosition.getLeft())[firstOperandPosition.getRight()]);
+                            // [n:m] => take the value in row n column m
+                            firstOperand = Integer.valueOf(
+                                    allRows.get(firstOperandPosition.getLeft())[firstOperandPosition.getRight()]);
 
                         if (operands.length == 2) {
                             Pair<Integer, Integer> secondOperandPosition = parsePosition(operands[1]);
                             if (secondOperandPosition.getRight() == null)
+                                // [n:] => take the result of the row n
                                 secondOperand = rows.get(secondOperandPosition.getLeft() - 1).getResult1();
                             else if (secondOperandPosition.getLeft() == null)
-                                secondOperand = Integer.valueOf(allRows.get(secondOperandPosition.getRight())[2]);
+                                // [:n] => current row, column n
+                                secondOperand = Integer.valueOf(allRows.get(i)[secondOperandPosition.getRight()]);
                             else
-                                secondOperand = Integer.valueOf(allRows.get(secondOperandPosition.getLeft())[secondOperandPosition.getRight()]);
+                                // [n:m] => take the value in row n column m
+                                secondOperand = Integer.valueOf(allRows.get(
+                                        secondOperandPosition.getLeft())[secondOperandPosition.getRight()]);
                         }
                         Computation computation = null;
                         if (secondOperand == null && firstOperand != null)
