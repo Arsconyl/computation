@@ -7,8 +7,12 @@ import java.io.IOException;
 
 public class ComputationTests {
 
-	@Test
-	public void testReadFile() throws IOException {
-		Computation.readCSVFile("input-file.csv");
-	}
+    @Test
+    public void test() throws IOException {
+        String fileName = "input-file.csv";
+
+        ComputationCSVService computationCSVService = new ComputationCSVService();
+
+        computationCSVService.readCSVFile(fileName);
+    }
 }
