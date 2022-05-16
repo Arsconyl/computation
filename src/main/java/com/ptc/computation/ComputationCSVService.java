@@ -13,12 +13,12 @@ import java.util.List;
 @Service
 public class ComputationCSVService {
 
-    public InputStreamResource exportCSV(List<ComputationRow> rows) throws IOException {
+    public InputStreamResource exportCSV(List<ComputationRule> rules) throws IOException {
         String filename = "/tmp/computation-" + Calendar.getInstance().getTimeInMillis() + ".csv";
         try (Writer excelWriter = new FileWriter(filename)) {
             excelWriter.write("RULE;RESULT1;RESULT2;RESULT3\n");
-            for (ComputationRow row : rows)
-                excelWriter.write(row.toCSV() + "\n");
+            for (ComputationRule rule : rules)
+                excelWriter.write(rule.toCSVLine().concat("\n"));
         }
 
         return new InputStreamResource(new FileInputStream(filename));

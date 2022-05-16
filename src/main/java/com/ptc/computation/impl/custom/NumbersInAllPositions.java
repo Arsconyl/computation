@@ -1,6 +1,6 @@
-package com.ptc.computationNew.impl.custom;
+package com.ptc.computation.impl.custom;
 
-import com.ptc.computationNew.CustomComputationRule;
+import com.ptc.computation.CustomComputationRule;
 import jdk.jfr.Description;
 
 import java.util.ArrayList;
@@ -19,6 +19,6 @@ public class NumbersInAllPositions extends CustomComputationRule {
 
 	@Override
 	public String toCSVLine() {
-		return "CUSTOM;" + this.getResults().get(0) + ";" + this.getResults().get(1) + ";" + this.getResults().get(2) + "\n";
+		return "CUSTOM;" + this.getResults().get(0) + ";" + this.getResults().get(1) + ";" + this.getResults().get(2);
 	}
 }

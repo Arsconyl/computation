@@ -1,7 +1,7 @@
-package com.ptc.computationNew;
+package com.ptc.computation;
 
-import com.ptc.computationNew.impl.custom.*;
-import com.ptc.computationNew.impl.simple.*;
+import com.ptc.computation.impl.custom.*;
+import com.ptc.computation.impl.simple.*;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.ptc.computationNew.impl.simple;
+package com.ptc.computation.impl.simple;
 
-import com.ptc.computationNew.SimpleComputationRule;
+import com.ptc.computation.SimpleComputationRule;
 
 import java.util.List;
 
@@ -13,6 +13,6 @@ public class SubstractRule extends SimpleComputationRule {
 
 	@Override
 	public String toCSVLine() {
-		return "SUB" + ";" + this.getResults().get(0) + ";0;0\n";
+		return "SUB" + ";" + this.getResults().get(0) + ";0;0";
 	}
 }

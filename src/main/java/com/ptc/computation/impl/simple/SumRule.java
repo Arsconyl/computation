@@ -1,6 +1,6 @@
-package com.ptc.computationNew.impl.simple;
+package com.ptc.computation.impl.simple;
 
-import com.ptc.computationNew.SimpleComputationRule;
+import com.ptc.computation.SimpleComputationRule;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class SumRule extends SimpleComputationRule {
 
 	@Override
 	public String toCSVLine() {
-		return "ADD" + ";" + this.getResults().get(0) + ";0;0\n";
+		return "ADD" + ";" + this.getResults().get(0) + ";0;0";
 	}
 
 }

@@ -1,7 +1,7 @@
-package com.ptc.computationNew.impl.custom;
+package com.ptc.computation.impl.custom;
 
-import com.ptc.computationNew.ComputationRule;
-import com.ptc.computationNew.CustomComputationRule;
+import com.ptc.computation.ComputationRule;
+import com.ptc.computation.CustomComputationRule;
 import jdk.jfr.Description;
 
 import java.util.ArrayList;
