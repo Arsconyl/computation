@@ -1,9 +1,7 @@
 package com.ptc.computation;
 
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +27,7 @@ public class ComputationController {
     public ResponseEntity<Object> computeFile(@RequestParam("file") MultipartFile file) {
 
         try {
-            String filename = "computation-" + Calendar.getInstance().getTimeInMillis() + ".csv";
+            String filename = "/tmp/computation-" + Calendar.getInstance().getTimeInMillis() + ".csv";
             file.transferTo(new File(filename));
 
             List<ComputationRow> rows = computationService.compute(filename);
@@ -43,8 +41,8 @@ public class ComputationController {
 
     private ResponseEntity<Object> exportCSV(List<ComputationRow> rows, String filename) throws IOException {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "text/csv;charset=UTF-8");
-        headers.add(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\"" + filename + ".csv\"");
+        headers.setContentType(MediaType.parseMediaType("text/csv"));
+        headers.setContentDisposition(ContentDisposition.parse("attachment; filename=" + filename));
 
         InputStreamResource csv = computationCSVService.exportCSV(rows);
 

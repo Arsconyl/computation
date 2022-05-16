@@ -16,12 +16,14 @@ async function uploadFile() {
   let response = await fetch('/api/computation', {
     method: "POST",
     body: formData
-  });
+  })
+  .then(response => response.blob())
+  .then(blob => {
+    let file = window.URL.createObjectURL(blob);
+    window.open(file);
+    });
 
-  if (response.status == 200) {
-    alert("File successfully uploaded.");
   }
-}
 </script>
 
 </body>

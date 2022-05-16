@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +56,12 @@ public class ParsingComputation {
         List<ComputationRow> rows = new ArrayList<>();
         CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
 
-        try (BufferedReader br = Files.newBufferedReader(new File(fileName).toPath(), StandardCharsets.UTF_8);
+        Path csvFile = Paths.get(fileName);
+        if (Files.notExists(csvFile)) {
+            Files.createFile(csvFile);
+        }
+
+        try (BufferedReader br = Files.newBufferedReader(csvFile, StandardCharsets.UTF_8);
              CSVReader reader = new CSVReaderBuilder(br).withCSVParser(parser).build()) {
 
             List<String[]> allRows = reader.readAll();
