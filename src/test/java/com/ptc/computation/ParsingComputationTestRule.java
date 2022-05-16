@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ParsingComputationTest {
+class ParsingComputationTestRule {
 
     @Test
     void test() throws IOException, CsvException {
