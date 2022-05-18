@@ -30,7 +30,7 @@ public class ComputationController {
             String filename = "/tmp/computation-" + Calendar.getInstance().getTimeInMillis() + ".csv";
             file.transferTo(new File(filename));
 
-            List<ComputationRow> rows = computationService.compute(filename);
+            List<ComputationRule> rows = computationService.compute(filename);
             return exportCSV(rows, "computation-" + Calendar.getInstance().getTimeInMillis() + ".csv");
 
         } catch (Exception e) {
@@ -39,12 +39,12 @@ public class ComputationController {
         }
     }
 
-    private ResponseEntity<Object> exportCSV(List<ComputationRow> rows, String filename) throws IOException {
+    private ResponseEntity<Object> exportCSV(List<ComputationRule> rules, String filename) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("text/csv"));
         headers.setContentDisposition(ContentDisposition.parse("attachment; filename=" + filename));
 
-        InputStreamResource csv = computationCSVService.exportCSV(rows);
+        InputStreamResource csv = computationCSVService.exportCSV(rules);
 
         return ResponseEntity.ok().headers(headers).body(csv);
     }
