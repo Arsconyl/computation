@@ -63,7 +63,7 @@ class ComputationControllerTest {
 		)
 		.andExpect(status().isOk())
 		.andExpect(content().contentType("application/json"))
-		.andExpect(jsonPath("$[0].name").value("ADD"))
-		.andExpect(jsonPath("$[0].description").value("Adds numbers"));
+		.andExpect(jsonPath("$[0].name").value("SUB"))
+		.andExpect(jsonPath("$[0].description").value("Substracts numbers"));
 	}
 }

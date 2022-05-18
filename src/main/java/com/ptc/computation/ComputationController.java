@@ -49,7 +49,7 @@ public class ComputationController {
         Function<Description, HashMap<String, String>> descriptionToJson = description -> {
             HashMap<String, String> json = new HashMap<>();
             json.put("name", description.name());
-            json.put("value", description.value());
+            json.put("description", description.value());
             return json;
         };
         try {
