@@ -7,19 +7,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ComputationControllerTest {
+class ComputationControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	@Test
-	public void test() throws Exception {
+	void test() throws Exception {
 		MockMultipartFile file
 				= new MockMultipartFile(
 				"file",
@@ -55,4 +55,15 @@ public class ComputationControllerTest {
 								CUSTOM;2;10;4
 								"""));
 		}
+
+	@Test
+	void testGetAllRules() throws Exception {
+		mockMvc.perform(
+				get("/api/rules")
+		)
+		.andExpect(status().isOk())
+		.andExpect(content().contentType("application/json"))
+		.andExpect(jsonPath("$[0].name").value("ADD"))
+		.andExpect(jsonPath("$[0].description").value("Adds numbers"));
 	}
+}

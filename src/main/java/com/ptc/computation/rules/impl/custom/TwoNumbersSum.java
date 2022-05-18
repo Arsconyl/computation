@@ -1,13 +1,13 @@
-package com.ptc.computation.impl.custom;
+package com.ptc.computation.rules.impl.custom;
 
-import com.ptc.computation.ComputationRule;
-import com.ptc.computation.CustomComputationRule;
-import jdk.jfr.Description;
+import com.ptc.computation.rules.ComputationRule;
+import com.ptc.computation.rules.CustomComputationRule;
+import com.ptc.computation.rules.Description;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Description("[2:]+[1:]=[:1]")
+@Description(name="CUSTOM", value="[2:]+[1:]=[:1]")
 public class TwoNumbersSum extends CustomComputationRule {
 
 	public TwoNumbersSum(List<ComputationRule> rulesAlreadyProcessed) {

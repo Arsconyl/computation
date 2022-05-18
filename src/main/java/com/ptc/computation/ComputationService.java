@@ -5,6 +5,8 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
+import com.ptc.computation.rules.*;
+import org.reflections.Reflections;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -15,6 +17,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ComputationService {
@@ -46,6 +51,20 @@ public class ComputationService {
 			rules.add(ruleFactory.computeRule(line, lines, rules));
 		}
 		return rules;
+	}
+
+	public Set<Description> getAllRules() {
+		Reflections simpleRules = new Reflections("com.ptc.computation.rules.impl.simple");
+		Reflections customRules = new Reflections("com.ptc.computation.rules.impl.custom");
+
+		Set<Class<? extends SimpleComputationRule>> simpleRulesList = simpleRules.getSubTypesOf(SimpleComputationRule.class);
+		Set<Class<? extends CustomComputationRule>> customRulesList = customRules.getSubTypesOf(CustomComputationRule.class);
+
+		List<Description> simpleRulesDescriptions = simpleRulesList.stream().map(rule -> rule.getAnnotation(Description.class)).toList();
+		List<Description> customRulesDescriptions = customRulesList.stream().map(rule -> rule.getAnnotation(Description.class)).toList();
+
+
+		return Stream.concat(simpleRulesDescriptions.stream(), customRulesDescriptions.stream()).collect(Collectors.toSet());
 	}
 
 }

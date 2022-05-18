@@ -1,13 +1,13 @@
-package com.ptc.computation.impl.custom;
+package com.ptc.computation.rules.impl.custom;
 
-import com.ptc.computation.ComputationRule;
-import com.ptc.computation.CustomComputationRule;
-import jdk.jfr.Description;
+import com.ptc.computation.rules.ComputationRule;
+import com.ptc.computation.rules.CustomComputationRule;
+import com.ptc.computation.rules.Description;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Description("[5:]=[:3]")
+@Description(name="CUSTOM", value="[5:]=[:3]")
 public class NumberToThirdPosition extends CustomComputationRule {
 
 	public NumberToThirdPosition(List<ComputationRule> rulesAlreadyProcessed) {

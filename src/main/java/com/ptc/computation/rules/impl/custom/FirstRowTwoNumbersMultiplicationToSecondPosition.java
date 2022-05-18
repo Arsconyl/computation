@@ -1,12 +1,12 @@
-package com.ptc.computation.impl.custom;
+package com.ptc.computation.rules.impl.custom;
 
-import com.ptc.computation.CustomComputationRule;
-import jdk.jfr.Description;
+import com.ptc.computation.rules.CustomComputationRule;
+import com.ptc.computation.rules.Description;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Description("[1:1]*[1:2]=[:2]")
+@Description(name="CUSTOM", value="[1:1]*[1:2]=[:2]")
 public class FirstRowTwoNumbersMultiplicationToSecondPosition extends CustomComputationRule {
 
 	public FirstRowTwoNumbersMultiplicationToSecondPosition(List<String[]> csvLines) {

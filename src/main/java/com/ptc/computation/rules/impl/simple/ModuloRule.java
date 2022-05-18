@@ -1,11 +1,13 @@
-package com.ptc.computation.impl.simple;
+package com.ptc.computation.rules.impl.simple;
 
-import com.ptc.computation.SimpleComputationRule;
+import com.ptc.computation.rules.Description;
+import com.ptc.computation.rules.SimpleComputationRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Description(name="MOD", value="Modulo of numbers")
 public class ModuloRule extends SimpleComputationRule {
 
 	public ModuloRule(String[] row) {

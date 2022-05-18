@@ -1,19 +1,23 @@
 package com.ptc.computation;
 
 import com.opencsv.exceptions.CsvException;
+import com.ptc.computation.rules.ComputationRule;
+import com.ptc.computation.rules.Description;
 import org.junit.jupiter.api.*;
 
 
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ComputationServiceTest {
 
     @Test
-    void test() throws IOException, CsvException {
+    void testCompute() throws IOException, CsvException {
         String fileName = "input-file.csv";
         
         ComputationService computationService = new ComputationService();
@@ -33,6 +37,23 @@ class ComputationServiceTest {
         assertEquals("CUSTOM;0;8;0", iterator.next().toCSVLine());
         assertEquals("CUSTOM;0;0;60", iterator.next().toCSVLine());
         assertEquals("CUSTOM;2;10;4", iterator.next().toCSVLine());
+    }
 
+    @Test
+    void testGetAllRules() {
+        ComputationService computationService = new ComputationService();
+
+        Set<Description> descriptions = computationService.getAllRules();
+
+        assertEquals(10, descriptions.size());
+
+        assertTrue(descriptions.stream().anyMatch(description -> description.name().equals("ADD")));
+        assertTrue(descriptions.stream().anyMatch(description -> description.value().equals("Adds numbers")));
+
+        assertTrue(descriptions.stream().anyMatch(description -> description.name().equals("MULTI")));
+        assertTrue(descriptions.stream().anyMatch(description -> description.value().equals("Multiplies numbers")));
+
+        assertTrue(descriptions.stream().anyMatch(description -> description.name().equals("CUSTOM")));
+        assertTrue(descriptions.stream().anyMatch(description -> description.value().equals("[1:1]*[1:2]=[:2]")));
     }
 }

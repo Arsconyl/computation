@@ -1,9 +1,11 @@
-package com.ptc.computation.impl.simple;
+package com.ptc.computation.rules.impl.simple;
 
-import com.ptc.computation.SimpleComputationRule;
+import com.ptc.computation.rules.Description;
+import com.ptc.computation.rules.SimpleComputationRule;
 
 import java.util.List;
 
+@Description(name="SUB", value="Substracts numbers")
 public class SubstractRule extends SimpleComputationRule {
 
 	public SubstractRule(String[] row) {

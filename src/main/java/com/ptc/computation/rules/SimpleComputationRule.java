@@ -1,4 +1,4 @@
-package com.ptc.computation;
+package com.ptc.computation.rules;
 
 import lombok.Data;
 

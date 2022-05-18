@@ -1,9 +1,11 @@
-package com.ptc.computation.impl.simple;
+package com.ptc.computation.rules.impl.simple;
 
-import com.ptc.computation.SimpleComputationRule;
+import com.ptc.computation.rules.Description;
+import com.ptc.computation.rules.SimpleComputationRule;
 
 import java.util.List;
 
+@Description(name="ADD", value="Adds numbers")
 public class SumRule extends SimpleComputationRule {
 
 	public SumRule(String[] row) {

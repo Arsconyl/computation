@@ -1,5 +1,7 @@
 package com.ptc.computation;
 
+import com.ptc.computation.rules.ComputationRule;
+import com.ptc.computation.rules.Description;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
 
 @RestController
 @RequestMapping("/api")
@@ -33,6 +37,23 @@ public class ComputationController {
             List<ComputationRule> rows = computationService.compute(filename);
             return exportCSV(rows, "computation-" + Calendar.getInstance().getTimeInMillis() + ".csv");
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping(value = "/rules")
+    @ResponseBody
+    public ResponseEntity<Object> getAllRules() {
+        Function<Description, HashMap<String, String>> descriptionToJson = description -> {
+            HashMap<String, String> json = new HashMap<>();
+            json.put("name", description.name());
+            json.put("value", description.value());
+            return json;
+        };
+        try {
+            return ResponseEntity.ok(computationService.getAllRules().stream().map(descriptionToJson).toList());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

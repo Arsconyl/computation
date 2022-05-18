@@ -1,5 +1,6 @@
 package com.ptc.computation;
 
+import com.ptc.computation.rules.ComputationRule;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 

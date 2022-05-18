@@ -1,12 +1,12 @@
-package com.ptc.computation.impl.custom;
+package com.ptc.computation.rules.impl.custom;
 
-import com.ptc.computation.CustomComputationRule;
-import jdk.jfr.Description;
+import com.ptc.computation.rules.CustomComputationRule;
+import com.ptc.computation.rules.Description;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Description("[1:1]=[:1],[3:1]=[:2],[6:1]=[:3]")
+@Description(name="CUSTOM", value="[1:1]=[:1],[3:1]=[:2],[6:1]=[:3]")
 public class NumbersInAllPositions extends CustomComputationRule {
 
 	public NumbersInAllPositions(List<String[]> csvLines) {
