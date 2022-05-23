@@ -44,6 +44,19 @@ public class ComputationCSVService {
             return allLines;
         }
     }
+
+    public File csvFile(String fileName, List<ComputationRule> rules) throws IOException {
+
+        Path csvFile = Paths.get(fileName);
+
+        try (BufferedWriter bw = Files.newBufferedWriter(csvFile, StandardCharsets.UTF_8)) {
+            bw.write("RULE;RESULT1;RESULT2;RESULT3\n");
+            for (ComputationRule rule : rules)
+                bw.write(rule.toCSVLine().concat("\n"));
+        }
+
+        return new File(fileName);
+    }
 }
 
 

@@ -8,6 +8,10 @@
 <input id="fileupload" type="file" name="fileupload" />
 <button id="upload-button" onclick="uploadFile()"> Upload </button>
 
+
+<input id="fileuploadasync" type="file" name="fileuploadasync" />
+<button id="upload-button-async" onclick="uploadFileAsync()"> Upload Async </button>
+
 <!-- Ajax JavaScript File Upload to Spring Boot Logic -->
 <script>
 async function uploadFile() {
@@ -22,6 +26,21 @@ async function uploadFile() {
     let file = window.URL.createObjectURL(blob);
     window.open(file);
     });
+
+  }
+</script>
+
+
+<script>
+async function uploadFileAsync() {
+  let formData = new FormData();
+  formData.append("file", fileuploadasync.files[0]);
+  let response = await fetch('/api/async/computation', {
+    method: "POST",
+    body: formData
+  })
+  .then(response => {return response.json()})
+  .then(json => alert(JSON.stringify(json)));
 
   }
 </script>

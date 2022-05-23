@@ -8,12 +8,14 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
+
+import static com.ptc.computation.ComputeConst.*;
 
 @RestController
 @RequestMapping("/api")
@@ -32,11 +34,11 @@ public class ComputationController {
     public ResponseEntity<Object> computeFile(@RequestParam("file") MultipartFile file) {
 
         try {
-            String filename = "/tmp/computation-" + Calendar.getInstance().getTimeInMillis() + ".csv";
+            String filename = FILEPATH + FILENAME + Calendar.getInstance().getTimeInMillis() + CSV_EXTENSION;
             file.transferTo(new File(filename));
 
             List<ComputationRule> rows = computationService.compute(filename);
-            return exportCSV(rows, "computation-" + Calendar.getInstance().getTimeInMillis() + ".csv");
+            return exportCSV(rows, FILENAME + Calendar.getInstance().getTimeInMillis() + CSV_EXTENSION);
 
         }
         catch (ComputeException e) {
@@ -63,6 +65,52 @@ public class ComputationController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PostMapping("/async/computation")
+    public ResponseEntity<Object> computeFileAsync(@RequestParam("file") MultipartFile file) {
+
+        try {
+            UUID uuid = UUID.randomUUID();
+
+            String filename = FILEPATH + FILENAME + uuid + CSV_EXTENSION;
+            file.transferTo(new File(filename));
+
+            computationService.computeAsync(uuid);
+
+            return ResponseEntity.ok(uuid);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/async/computation/{uuid}")
+    public ResponseEntity<Object> getAsyncComputation(@PathVariable("uuid") UUID uuid) {
+        String filename = FILEPATH + FILENAME + uuid + CSV_EXTENSION;
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("text/csv"));
+            headers.setContentDisposition(ContentDisposition.parse("attachment; filename=" + filename));
+            InputStreamResource body = new InputStreamResource(new FileInputStream(filename));
+            return ResponseEntity.ok().headers(headers).body(body);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/async/status/{uuid}")
+    public ResponseEntity<Object> getAsyncStatus(@PathVariable("uuid") UUID uuid) {
+        String filename = FILEPATH + FILENAME + uuid + CSV_EXTENSION;
+        File file = new File(filename);
+        if (file.exists()) {
+            return ResponseEntity.ok("COMPLETED");
+        }
+        else {
+            return ResponseEntity.ok("NOT_STARTED OR IN_PROGRESS");
         }
     }
 

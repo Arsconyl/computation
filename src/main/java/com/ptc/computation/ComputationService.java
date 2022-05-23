@@ -5,10 +5,12 @@ import com.ptc.computation.rules.*;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,6 +33,20 @@ public class ComputationService {
 			rules.add(ruleFactory.computeRule(line, lines, rules));
 		}
 		return rules;
+	}
+
+	public File computeAsync(UUID uuid) {
+		ComputationThreadedService computationThreadedService =
+				new ComputationThreadedService(ruleFactory, csvService, uuid);
+		Thread thread = new Thread(computationThreadedService);
+		thread.start();
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			thread.interrupt();
+		}
+		return computationThreadedService.getFileToProduce();
 	}
 
 	public Set<Description> getAllRules() {
