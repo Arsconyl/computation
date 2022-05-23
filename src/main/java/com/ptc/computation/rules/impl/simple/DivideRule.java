@@ -18,7 +18,7 @@ public class DivideRule extends SimpleComputationRule {
 		for (Integer number : numbersSorted) {
 			reduce = number / reduce;
 		}
-		this.setResults(List.of(reduce));
+		this.setResults(List.of(reduce, 0, 0));
 	}
 
 	@Override

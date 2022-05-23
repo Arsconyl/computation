@@ -16,9 +16,4 @@ public class NumbersInAllPositions extends CustomComputationRule {
 		numbers.add(Integer.parseInt(csvLines.get(5)[1]));
 		this.setResults(List.of(numbers.get(0), numbers.get(1), numbers.get(2)));
 	}
-
-	@Override
-	public String toCSVLine() {
-		return "CUSTOM;" + this.getResults().get(0) + ";" + this.getResults().get(1) + ";" + this.getResults().get(2);
-	}
 }

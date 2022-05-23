@@ -14,12 +14,6 @@ public class TwoNumbersSum extends CustomComputationRule {
 		List<Integer> numbers = new ArrayList<>(2);
 		numbers.add(rulesAlreadyProcessed.get(1).getResults().get(0));
 		numbers.add(rulesAlreadyProcessed.get(0).getResults().get(0));
-		this.setResults(List.of(numbers.get(0) + numbers.get(1)));
+		this.setResults(List.of(numbers.get(0) + numbers.get(1), 0, 0));
 	}
-
-	@Override
-	public String toCSVLine() {
-		return "CUSTOM;" + this.getResults().get(0) + ";0;0";
-	}
-
 }

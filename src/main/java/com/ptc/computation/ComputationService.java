@@ -32,7 +32,7 @@ public class ComputationService {
 		for (String[] line : lines) {
 			rules.add(ruleFactory.computeRule(line, lines, rules));
 		}
-		return rules;
+		return ruleFactory.computeTotal(rules);
 	}
 
 	public File computeAsync(UUID uuid) {

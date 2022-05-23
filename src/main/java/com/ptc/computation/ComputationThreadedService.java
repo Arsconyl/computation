@@ -37,6 +37,7 @@ public class ComputationThreadedService implements Runnable {
 			for (String[] line : lines) {
 				rules.add(ruleFactory.computeRule(line, lines, rules));
 			}
+			rules = ruleFactory.computeTotal(rules);
 			fileToProduce = csvService.csvFile(FILEPATH + FILENAME + uuid + CSV_EXTENSION, rules);
 		} catch (IOException | CsvException e) {
 			throw new ComputeException("Error while reading csv file");

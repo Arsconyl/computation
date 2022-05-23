@@ -55,6 +55,9 @@ class ComputationControllerTest {
 								CUSTOM;0;8;0
 								CUSTOM;0;0;60
 								CUSTOM;2;10;4
+								TOTAL;136;18;64
+								TOTAL;136;82;0
+								TOTAL;218;0;0
 								"""));
 	}
 
@@ -112,6 +115,9 @@ class ComputationControllerTest {
 								CUSTOM;0;8;0
 								CUSTOM;0;0;60
 								CUSTOM;2;10;4
+								TOTAL;136;18;64
+								TOTAL;136;82;0
+								TOTAL;218;0;0
 								"""));
 	}
 }

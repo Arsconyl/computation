@@ -18,7 +18,7 @@ public class ModuloRule extends SimpleComputationRule {
 		for (Integer number : numbersSorted) {
 			reduce = reduce % number;
 		}
-		this.setResults(List.of(reduce));
+		this.setResults(List.of(reduce, 0, 0));
 	}
 
 	@Override

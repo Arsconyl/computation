@@ -10,7 +10,7 @@ public class SubstractRule extends SimpleComputationRule {
 
 	public SubstractRule(String[] row) {
 		super(row);
-		this.setResults(List.of(getNumbers().stream().reduce(0, (a, b) -> a - b)));
+		this.setResults(List.of(getNumbers().stream().reduce(0, (a, b) -> a - b), 0, 0));
 	}
 
 	@Override

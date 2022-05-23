@@ -10,7 +10,7 @@ public class MultiplyRule extends SimpleComputationRule {
 
 	public MultiplyRule(String[] row) {
 		super(row);
-		this.setResults(List.of(getNumbers().stream().reduce(1, (a, b) -> a * b)));
+		this.setResults(List.of(getNumbers().stream().reduce(1, (a, b) -> a * b), 0, 0));
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public class SumRule extends SimpleComputationRule {
 
 	public SumRule(String[] row) {
 		super(row);
-		this.setResults(List.of(getNumbers().stream().reduce(0, Integer::sum)));
+		this.setResults(List.of(getNumbers().stream().reduce(0, Integer::sum), 0, 0));
 	}
 
 	@Override
