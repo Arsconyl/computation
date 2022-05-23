@@ -74,12 +74,15 @@ public class ComputationController {
         try {
             UUID uuid = UUID.randomUUID();
 
-            String filename = FILEPATH + FILENAME + uuid + CSV_EXTENSION;
+            String filename = FILEPATH + FILENAME + uuid + CSV_EXTENSION + ".in";
             file.transferTo(new File(filename));
 
             computationService.computeAsync(uuid);
 
-            return ResponseEntity.ok(uuid);
+            HashMap<String, String> json = new HashMap<>();
+            json.put("uuid", uuid.toString());
+
+            return ResponseEntity.ok(json);
         }
         catch (IOException e) {
             e.printStackTrace();

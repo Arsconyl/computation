@@ -33,11 +33,11 @@ public class ComputationThreadedService implements Runnable {
 		List<String[]> lines;
 		List<ComputationRule> rules = new ArrayList<>();
 		try {
-			lines = csvService.csvLines(FILEPATH + FILENAME + uuid + CSV_EXTENSION);
+			lines = csvService.csvLines(FILEPATH + FILENAME + uuid + CSV_EXTENSION + ".in");
 			for (String[] line : lines) {
 				rules.add(ruleFactory.computeRule(line, lines, rules));
 			}
-			fileToProduce = csvService.csvFile(FILENAME + uuid + CSV_EXTENSION, rules);
+			fileToProduce = csvService.csvFile(FILEPATH + FILENAME + uuid + CSV_EXTENSION, rules);
 		} catch (IOException | CsvException e) {
 			throw new ComputeException("Error while reading csv file");
 		}
