@@ -1,5 +1,6 @@
 package com.ptc.computation;
 
+import com.opencsv.exceptions.CsvException;
 import com.ptc.computation.rules.ComputationRule;
 import com.ptc.computation.rules.Description;
 import org.springframework.core.io.InputStreamResource;
@@ -37,9 +38,14 @@ public class ComputationController {
             List<ComputationRule> rows = computationService.compute(filename);
             return exportCSV(rows, "computation-" + Calendar.getInstance().getTimeInMillis() + ".csv");
 
-        } catch (Exception e) {
+        }
+        catch (ComputeException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        catch (IOException | CsvException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

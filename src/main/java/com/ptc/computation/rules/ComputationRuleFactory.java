@@ -1,11 +1,13 @@
 package com.ptc.computation.rules;
 
+import com.ptc.computation.ComputeException;
 import com.ptc.computation.rules.impl.custom.*;
 import com.ptc.computation.rules.impl.simple.*;
-import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class ComputationRuleFactory {
 	public ComputationRule computeRule(String[] row, List<String[]> csvLines, List<ComputationRule> rulesAlreadyProcessed) {
 		String rule = row[0];
@@ -20,7 +22,7 @@ public class ComputationRuleFactory {
 			case "[1:1]*[1:2]=[:2]" -> new FirstRowTwoNumbersMultiplicationToSecondPosition(csvLines);
 			case "[5:]=[:3]" -> new NumberToThirdPosition(rulesAlreadyProcessed);
 			case "[1:1]=[:1],[3:1]=[:2],[6:1]=[:3]" -> new NumbersInAllPositions(csvLines);
-			default -> throw new NotImplementedException("Rule for " + rule + " is not implemented");
+			default -> throw new ComputeException("Rule for " + rule + " is not implemented");
 		};
 	}
 }

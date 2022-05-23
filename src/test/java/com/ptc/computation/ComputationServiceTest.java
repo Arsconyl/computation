@@ -2,8 +2,11 @@ package com.ptc.computation;
 
 import com.opencsv.exceptions.CsvException;
 import com.ptc.computation.rules.ComputationRule;
+import com.ptc.computation.rules.ComputationRuleFactory;
 import com.ptc.computation.rules.Description;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 
 import java.io.IOException;
@@ -14,14 +17,16 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
 class ComputationServiceTest {
+
+    @Autowired
+    ComputationService computationService;
 
     @Test
     void testCompute() throws IOException, CsvException {
         String fileName = "input-file.csv";
-        
-        ComputationService computationService = new ComputationService();
-        
+
         List<ComputationRule> rules = computationService.compute(fileName);
 
         assertEquals(9, rules.size());
@@ -41,8 +46,6 @@ class ComputationServiceTest {
 
     @Test
     void testGetAllRules() {
-        ComputationService computationService = new ComputationService();
-
         Set<Description> descriptions = computationService.getAllRules();
 
         assertEquals(10, descriptions.size());

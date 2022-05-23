@@ -1,13 +1,19 @@
 package com.ptc.computation;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 import com.ptc.computation.rules.ComputationRule;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.List;
 
@@ -23,6 +29,20 @@ public class ComputationCSVService {
         }
 
         return new InputStreamResource(new FileInputStream(filename));
+    }
+
+    public List<String[]> csvLines(String fileName) throws IOException, CsvException {
+        CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+
+        Path csvFile = Paths.get(fileName);
+
+        try (BufferedReader br = Files.newBufferedReader(csvFile, StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReaderBuilder(br).withCSVParser(parser).build()) {
+
+            List<String[]> allLines = reader.readAll();
+            allLines.remove(0); // remove header
+            return allLines;
+        }
     }
 }
 
